@@ -1,0 +1,18 @@
+{
+  "name": "ChikoritaGym",
+  "short_name": "ChikoritaGym",
+  "description": "Treine, evolua e fique mais forte a cada dia!",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#1a4d2e",
+  "theme_color": "#1a4d2e",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Ccircle cx='256' cy='256' r='230' fill='%23a3d977'/%3E%3Ctext x='256' y='380' font-size='300' text-anchor='middle'%3E🍃%3C/text%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
