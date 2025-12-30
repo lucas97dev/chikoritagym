@@ -5,501 +5,77 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a4d2e">
     <meta name="description" content="ChikoritaGym - Treine, evolua e fique mais forte a cada dia!">
-    <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%23a3d977'/><text x='50' y='70' font-size='60' text-anchor='middle'>🍃</text></svg>">
     <title>ChikoritaGym</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #1a4d2e 0%, #4f772d 50%, #1a4d2e 100%);
             min-height: 100vh;
             padding: 20px;
+            scroll-behavior: smooth;
         }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
+        .container { max-width: 800px; margin: 0 auto; }
+
+        /* Melhorias no Design dos Cards */
+        .card {
+            background: rgba(199, 244, 100, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(163, 217, 119, 0.3);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            transition: transform 0.2s ease;
         }
 
-        .install-prompt {
-            background: linear-gradient(135deg, #ffd93d 0%, #ffeb3b 100%);
-            border: 3px solid #f9a825;
+        .exercise-card {
+            background: rgba(255,255,255,0.95);
+            border: 2px solid #a3d977;
             border-radius: 12px;
             padding: 15px;
-            margin-bottom: 20px;
-            display: none;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
         }
 
-        .install-prompt.show {
-            display: block;
+        .exercise-card:focus-within {
+            border-color: #ffd93d;
+            box-shadow: 0 0 15px rgba(255, 217, 61, 0.4);
         }
 
-        .install-prompt-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .install-prompt-text {
-            color: #1a4d2e;
-            font-weight: bold;
-        }
-
-        .install-btn {
-            background: #1a4d2e;
-            color: #ffd93d;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            white-space: nowrap;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            color: white;
-        }
-
-        .header-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .header h1 {
-            font-size: 2.5em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-
-        .header p {
-            color: #c7f464;
-            font-size: 1.1em;
-        }
-
-        .leaf-icon {
-            font-size: 2.5em;
-        }
-
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
+        /* Botões Estilizados */
         .btn {
-            flex: 1;
-            padding: 15px 20px;
+            min-height: 48px; /* Melhor para toque mobile */
+            padding: 12px 20px;
             border: none;
             border-radius: 12px;
-            font-size: 1em;
             font-weight: bold;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            transition: all 0.3s;
+            transition: all 0.2s;
             box-shadow: 0 4px 6px rgba(0,0,0,0.2);
         }
 
-        .btn-primary {
-            background: #a3d977;
-            color: #1a4d2e;
-        }
+        .btn:active { transform: scale(0.95); }
 
-        .btn-primary:hover {
-            background: #8bc34a;
-            transform: translateY(-2px);
-        }
+        .btn-primary { background: #a3d977; color: #1a4d2e; }
+        .btn-secondary { background: #ffd93d; color: #1a4d2e; }
+        .btn-success { background: #a3d977; color: #1a4d2e; }
+        .btn-danger { background: #ef5350; color: white; }
 
-        .btn-secondary {
-            background: #ffd93d;
-            color: #1a4d2e;
-        }
+        /* Header e Títulos */
+        .header { text-align: center; margin-bottom: 30px; color: white; }
+        .header h1 { font-size: 2.5em; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .section-title { color: white; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; }
 
-        .btn-secondary:hover {
-            background: #ffeb3b;
-            transform: translateY(-2px);
-        }
-
-        .btn-success {
-            background: #a3d977;
-            color: #1a4d2e;
-        }
-
-        .btn-success:hover {
-            background: #8bc34a;
-        }
-
-        .btn-danger {
-            background: #ef5350;
-            color: white;
-        }
-
-        .btn-danger:hover {
-            background: #e53935;
-        }
-
-        .btn-small {
-            padding: 8px 16px;
-            font-size: 0.9em;
-        }
-
-        .card {
-            background: rgba(199, 244, 100, 0.2);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(163, 217, 119, 0.5);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
-
-        .card:hover {
-            background: rgba(199, 244, 100, 0.3);
-            cursor: pointer;
-        }
-
-        .workout-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            color: white;
-        }
-
-        .workout-info h3 {
-            font-size: 1.3em;
-            margin-bottom: 5px;
-        }
-
-        .workout-info p {
-            color: #c7f464;
-        }
-
-        .workout-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .icon-btn {
-            padding: 10px;
-            background: #2196f3;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .icon-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .icon-btn.delete {
-            background: #ef5350;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 60px 20px;
-            color: white;
-        }
-
-        .empty-state .icon {
-            font-size: 4em;
-            margin-bottom: 20px;
-            color: #c7f464;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        .form-group label {
-            display: block;
-            color: #c7f464;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #a3d977;
-            border-radius: 8px;
-            font-size: 1em;
-            font-weight: 600;
-            background: rgba(255,255,255,0.9);
-            color: #1a4d2e;
-        }
-
-        .form-group textarea {
-            min-height: 80px;
-            resize: vertical;
-            font-family: inherit;
-        }
-
-        .exercise-card {
-            background: rgba(255,255,255,0.9);
-            border: 2px solid #a3d977;
-            border-radius: 12px;
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-
-        .exercise-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .exercise-header h4 {
-            color: #1a4d2e;
-            font-size: 1.1em;
-        }
-
-        .delete-icon {
-            color: #ef5350;
-            cursor: pointer;
-            font-size: 1.2em;
-        }
-
-        .input-row {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .input-group label {
-            font-size: 0.85em;
-            color: #2d5016;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .input-group input, .input-group textarea {
-            padding: 10px;
-            border: 2px solid #c7f464;
-            border-radius: 8px;
-            font-weight: 600;
-            color: #1a4d2e;
-            background: #f1f8e9;
-        }
-
-        .series-section {
-            background: #f1f8e9;
-            border: 2px solid #c7f464;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        .series-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .series-header h5 {
-            color: #2d5016;
-            font-size: 1em;
-        }
-
-        .series-card {
-            background: white;
-            border: 2px solid #a3d977;
-            border-radius: 8px;
-            padding: 12px;
-            margin-bottom: 10px;
-        }
-
-        .series-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .series-title strong {
-            color: #1a4d2e;
-        }
-
-        .back-btn {
-            color: #c7f464;
-            background: none;
-            border: none;
-            font-size: 1em;
-            cursor: pointer;
-            margin-bottom: 20px;
-            padding: 10px;
-            font-weight: bold;
-        }
-
-        .back-btn:hover {
-            color: white;
-        }
-
-        .section-title {
-            color: white;
-            font-size: 1.5em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .exercise-detail {
-            color: #2d5016;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-
-        .register-form {
-            background: #f1f8e9;
-            border: 2px solid #c7f464;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 15px 0;
-        }
-
-        .register-inputs {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-
-        .history-item {
-            background: #f1f8e9;
-            border: 1px solid #c7f464;
-            border-radius: 6px;
-            padding: 10px 15px;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            color: #1a4d2e;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-
-        .progress-card {
-            background: rgba(255,255,255,0.9);
-            border: 2px solid #a3d977;
-            border-radius: 12px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .progress-header {
-            color: #1a4d2e;
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-
-        .progress-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .stat-box {
-            background: #f1f8e9;
-            border: 1px solid #c7f464;
-            border-radius: 8px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 0.8em;
-            color: #4f772d;
-            font-weight: 600;
-        }
-
-        .stat-value {
-            font-size: 1.3em;
-            font-weight: bold;
-            color: #1a4d2e;
-        }
-
-        .stat-value.positive {
-            color: #66bb6a;
-        }
-
-        .progress-bar-container {
-            background: #c7f464;
-            border: 2px solid #a3d977;
-            border-radius: 10px;
-            height: 12px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, #a3d977 0%, #ffd93d 100%);
-            transition: width 0.3s;
-        }
-
-        .progress-info {
-            font-size: 0.8em;
-            color: #4f772d;
-            font-weight: 600;
-        }
-
-        .series-info-view {
-            background: white;
-            border: 1px solid #c7f464;
-            border-radius: 6px;
-            padding: 10px;
-            margin: 8px 0;
-        }
-
-        .series-info-view strong {
-            color: #1a4d2e;
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .series-detail {
-            color: #4f772d;
-            font-size: 0.9em;
-            margin: 3px 0;
-        }
-
-        .notes-display {
-            background: #fffef0;
-            border: 1px solid #ffd93d;
-            border-radius: 6px;
-            padding: 10px;
-            margin-top: 10px;
-            color: #1a4d2e;
-            font-size: 0.9em;
-            font-style: italic;
-        }
-
+        /* Timer e Progresso */
         .timer-display {
             background: linear-gradient(135deg, #ffd93d 0%, #ffeb3b 100%);
             border: 3px solid #f9a825;
@@ -507,365 +83,266 @@
             padding: 20px;
             margin: 15px 0;
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
-        .timer-display.active {
-            animation: pulse 1s infinite;
-        }
+        .timer-time { font-size: 3em; font-weight: bold; color: #1a4d2e; }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .timer-time {
-            font-size: 3em;
-            font-weight: bold;
-            color: #1a4d2e;
-            margin-bottom: 10px;
-        }
-
-        .timer-label {
-            font-size: 1.2em;
-            color: #2d5016;
-            font-weight: 600;
-        }
-
-        .timer-controls {
+        .history-item {
+            background: #f1f8e9;
+            border-left: 4px solid #c7f464;
+            border-radius: 4px;
+            padding: 10px;
+            margin-bottom: 8px;
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            justify-content: space-between;
+            font-size: 0.9em;
         }
 
-        .hidden {
-            display: none;
-        }
-
+        /* Utilitários */
+        .hidden { display: none !important; }
+        .btn-group { display: flex; gap: 10px; margin-bottom: 20px; }
+        
         @media (max-width: 600px) {
-            .header h1 {
-                font-size: 2em;
-            }
-            
-            .btn-group {
-                flex-direction: column;
-            }
-
-            .input-row {
-                grid-template-columns: 1fr;
-            }
-
-            .progress-stats {
-                grid-template-columns: 1fr;
-            }
-
-            .install-prompt-content {
-                flex-direction: column;
-            }
-
-            .install-btn {
-                width: 100%;
-            }
+            .btn-group { flex-direction: column; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Banner de instalação -->
-        <div id="installPrompt" class="install-prompt">
-            <div class="install-prompt-content">
-                <div class="install-prompt-text">
-                    📱 Instale o ChikoritaGym como app no seu celular!
-                </div>
-                <button id="installButton" class="install-btn">Instalar</button>
-            </div>
-        </div>
-
         <header class="header">
-            <div class="header-title">
-                <span class="leaf-icon">🍃</span>
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <span style="font-size: 2.5em;">🍃</span>
                 <h1>ChikoritaGym</h1>
             </div>
-            <p>Treine, evolua e fique mais forte a cada dia! 🍃</p>
+            <p style="color: #c7f464;">Treine, evolua e fique mais forte!</p>
         </header>
 
-        <!-- Lista de Treinos -->
         <div id="listView">
             <div class="btn-group">
-                <button class="btn btn-primary" onclick="showAddWorkout()">
-                    ➕ Nova Ficha
-                </button>
-                <button class="btn btn-secondary" onclick="showProgress()">
-                    📈 Progresso
-                </button>
-            </div>
-            <div class="btn-group">
-                <button class="btn btn-success" onclick="exportData()">
-                    📤 Exportar Backup
-                </button>
-                <button class="btn btn-primary" onclick="document.getElementById('importFile').click()">
-                    📥 Importar Backup
-                </button>
-                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importData(event)">
+                <button class="btn btn-primary" onclick="showAddWorkout()">➕ Nova Ficha</button>
+                <button class="btn btn-secondary" onclick="showProgress()">📈 Progresso</button>
             </div>
             <div id="workoutList"></div>
         </div>
 
-        <!-- Formulário de Edição -->
         <div id="editView" class="hidden">
             <div class="card">
-                <h2 class="section-title">🍃 Editar Ficha</h2>
+                <h2 class="section-title">📝 Editar Ficha</h2>
+                <input type="text" id="workoutDay" placeholder="Ex: Segunda-feira" style="width:100%; padding:12px; margin-bottom:10px; border-radius:8px; border:2px solid #a3d977;">
+                <input type="text" id="workoutName" placeholder="Ex: Peito e Tríceps" style="width:100%; padding:12px; margin-bottom:20px; border-radius:8px; border:2px solid #a3d977;">
                 
-                <div class="form-group">
-                    <label>Dia</label>
-                    <input type="text" id="workoutDay" placeholder="Ex: Dia 1, Segunda-feira...">
-                </div>
-
-                <div class="form-group">
-                    <label>Grupo Muscular</label>
-                    <input type="text" id="workoutName" placeholder="Ex: Peito, Costas, Pernas...">
-                </div>
-
-                <div class="form-group">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <h3 style="color: white;">Exercícios</h3>
-                        <button class="btn btn-primary btn-small" onclick="addExerciseToEdit()">
-                            ➕ Adicionar
-                        </button>
-                    </div>
-                    <div id="exercisesList"></div>
-                </div>
-
+                <div id="exercisesList"></div>
+                
+                <button class="btn btn-primary" style="width:100%; margin-bottom:10px;" onclick="addExerciseToEdit()">➕ Adicionar Exercício</button>
                 <div class="btn-group">
-                    <button class="btn btn-success" onclick="saveWorkout()">Salvar</button>
-                    <button class="btn btn-danger" onclick="cancelEdit()">Cancelar</button>
+                    <button class="btn btn-success" style="flex:1" onclick="saveWorkout()">Salvar</button>
+                    <button class="btn btn-danger" style="flex:1" onclick="cancelEdit()">Cancelar</button>
                 </div>
             </div>
         </div>
 
-        <!-- Visualização do Treino -->
         <div id="viewWorkout" class="hidden">
-            <button class="back-btn" onclick="backToList()">← Voltar</button>
+            <button class="btn" style="background:none; color:#c7f464; margin-bottom:10px;" onclick="backToList()">← Voltar</button>
             <div id="workoutDetail"></div>
         </div>
 
-        <!-- Visualização de Progresso -->
         <div id="progressView" class="hidden">
-            <button class="back-btn" onclick="closeProgress()">← Voltar</button>
-            <div class="card">
-                <h2 class="section-title">📈 Evolução de Cargas</h2>
-                <div id="progressList"></div>
-            </div>
+            <button class="btn" style="background:none; color:#c7f464; margin-bottom:10px;" onclick="closeProgress()">← Voltar</button>
+            <div id="progressList"></div>
         </div>
     </div>
 
     <script>
-        // Service Worker para funcionar offline
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('sw.js').catch(() => {
-                    console.log('Service Worker registration failed');
-                });
-            });
-        }
-
-        // PWA Install Prompt
-        let deferredPrompt;
-        
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            document.getElementById('installPrompt').classList.add('show');
-        });
-
-        document.getElementById('installButton').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                deferredPrompt = null;
-                document.getElementById('installPrompt').classList.remove('show');
-            }
-        });
-
         let workouts = JSON.parse(localStorage.getItem('chikoritaGymWorkouts')) || [];
-        let currentWorkout = null;
         let editingWorkout = null;
         let timerInterval = null;
-        let timerSeconds = 0;
 
+        // --- SISTEMA DE ÁUDIO ---
+        function playBeep() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.setValueAtTime(880, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.5);
+            } catch(e) { console.log("Áudio bloqueado"); }
+        }
+
+        // --- CORE LOGIC ---
         function saveToStorage() {
             localStorage.setItem('chikoritaGymWorkouts', JSON.stringify(workouts));
         }
 
         function renderWorkoutList() {
             const listDiv = document.getElementById('workoutList');
-            
             if (workouts.length === 0) {
-                listDiv.innerHTML = `
-                    <div class="card empty-state">
-                        <div class="icon">🍃</div>
-                        <h3>Nenhuma ficha criada ainda</h3>
-                        <p style="color: #c7f464; margin-top: 10px;">Clique em "Nova Ficha" para começar sua jornada!</p>
-                    </div>
-                `;
+                listDiv.innerHTML = `<div class="card" style="text-align:center; color:white;"><h3>Nenhuma ficha criada.</h3><p>Toque em Nova Ficha para começar!</p></div>`;
                 return;
             }
-
-            listDiv.innerHTML = workouts.map((w, index) => `
-                <div class="card workout-card" onclick="viewWorkout(${index})">
-                    <div class="workout-info">
-                        <h3>📅 ${w.day}</h3>
-                        <p>${w.name || 'Sem nome'}</p>
-                        <p style="font-size: 0.9em;">${w.exercises.length} exercícios</p>
-                    </div>
-                    <div class="workout-actions">
-                        <button class="icon-btn" onclick="event.stopPropagation(); editWorkout(${index})">✏️</button>
-                        <button class="icon-btn delete" onclick="event.stopPropagation(); deleteWorkout(${index})">🗑️</button>
+            listDiv.innerHTML = workouts.map((w, i) => `
+                <div class="card" onclick="viewWorkout(${i})" style="cursor:pointer">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <div>
+                            <h3 style="color:white">📅 ${w.day}</h3>
+                            <p style="color:#c7f464">${w.name}</p>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <button class="btn btn-primary" style="padding:8px" onclick="event.stopPropagation(); editWorkout(${i})">✏️</button>
+                            <button class="btn btn-danger" style="padding:8px" onclick="event.stopPropagation(); deleteWorkout(${i})">🗑️</button>
+                        </div>
                     </div>
                 </div>
             `).join('');
         }
 
-        function showAddWorkout() {
-            editingWorkout = {
-                day: `Dia ${workouts.length + 1}`,
-                name: '',
-                exercises: []
-            };
-            document.getElementById('workoutDay').value = editingWorkout.day;
-            document.getElementById('workoutName').value = editingWorkout.name;
-            document.getElementById('exercisesList').innerHTML = '';
-            
-            document.getElementById('listView').classList.add('hidden');
-            document.getElementById('editView').classList.remove('hidden');
-        }
-
-        function editWorkout(index) {
-            editingWorkout = JSON.parse(JSON.stringify(workouts[index]));
-            editingWorkout.editIndex = index;
-            
-            document.getElementById('workoutDay').value = editingWorkout.day;
-            document.getElementById('workoutName').value = editingWorkout.name;
-            renderExercisesList();
-            
-            document.getElementById('listView').classList.add('hidden');
-            document.getElementById('editView').classList.remove('hidden');
-        }
-
-        function renderExercisesList() {
-            const listDiv = document.getElementById('exercisesList');
-            listDiv.innerHTML = editingWorkout.exercises.map((ex, index) => `
-                <div class="exercise-card">
-                    <div class="exercise-header">
-                        <h4>Exercício ${index + 1}</h4>
-                        <span class="delete-icon" onclick="removeExercise(${index})">🗑️</span>
-                    </div>
-                    <input type="text" value="${ex.name}" 
-                           onchange="updateExercise(${index}, 'name', this.value)"
-                           placeholder="Nome do exercício"
-                           style="width: 100%; margin-bottom: 10px; padding: 10px; border: 2px solid #c7f464; border-radius: 8px; font-weight: 600; color: #1a4d2e; background: #f1f8e9;">
-                    
-                    <div class="form-group">
-                        <label style="color: #2d5016; font-size: 0.9em;">Anotações</label>
-                        <textarea onchange="updateExercise(${index}, 'notes', this.value)" 
-                                  placeholder="Ex: Atenção na postura, usar pegada pronada..."
-                                  style="min-height: 60px;">${ex.notes || ''}</textarea>
-                    </div>
-
-                    <div class="series-section">
-                        <div class="series-header">
-                            <h5>Séries</h5>
-                            <button class="btn btn-primary btn-small" onclick="addSeries(${index})">
-                                ➕ Série
-                            </button>
-                        </div>
-                        <div id="seriesList-${index}">
-                            ${(ex.series || []).map((serie, sIndex) => `
-                                <div class="series-card">
-                                    <div class="series-title">
-                                        <strong>Série ${sIndex + 1}</strong>
-                                        <span class="delete-icon" onclick="removeSeries(${index}, ${sIndex})" style="font-size: 1em;">🗑️</span>
+        function viewWorkout(index) {
+            const w = workouts[index];
+            const detail = document.getElementById('workoutDetail');
+            detail.innerHTML = `
+                <div class="card">
+                    <h2 style="color:white; margin-bottom:20px;">${w.day} - ${w.name}</h2>
+                    ${w.exercises.map((ex, exI) => `
+                        <div class="exercise-card">
+                            <h3 style="color:#1a4d2e">${ex.name}</h3>
+                            ${ex.notes ? `<p style="font-size:0.8em; color:#4f772d; margin-bottom:10px;">📝 ${ex.notes}</p>` : ''}
+                            
+                            ${ex.series.map((s, sI) => `
+                                <div style="background:#f1f8e9; padding:10px; border-radius:8px; margin-top:10px;">
+                                    <div style="display:flex; justify-content:space-between; font-weight:bold; color:#1a4d2e">
+                                        <span>Série ${sI + 1} (${s.minReps}-${s.maxReps} reps)</span>
+                                        <span>⏱️ ${s.rest}s</span>
                                     </div>
-                                    <input type="text" value="${serie.name || ''}" 
-                                           onchange="updateSeries(${index}, ${sIndex}, 'name', this.value)"
-                                           placeholder="Nome da série (opcional)"
-                                           style="width: 100%; margin-bottom: 8px; padding: 8px; border: 2px solid #c7f464; border-radius: 6px; font-weight: 600; color: #1a4d2e; background: #f1f8e9;">
-                                    <div class="input-row">
-                                        <div class="input-group">
-                                            <label>Reps Min</label>
-                                            <input type="number" value="${serie.minReps}" 
-                                                   onchange="updateSeries(${index}, ${sIndex}, 'minReps', parseInt(this.value))">
-                                        </div>
-                                        <div class="input-group">
-                                            <label>Reps Max</label>
-                                            <input type="number" value="${serie.maxReps}" 
-                                                   onchange="updateSeries(${index}, ${sIndex}, 'maxReps', parseInt(this.value))">
-                                        </div>
+                                    
+                                    <div id="timer-${exI}-${sI}" class="hidden timer-display">
+                                        <div class="timer-time" id="time-${exI}-${sI}">00:00</div>
+                                        <button class="btn btn-danger" style="width:100%" onclick="stopTimer(${exI}, ${sI})">Pular Descanso</button>
                                     </div>
-                                    <div class="input-group" style="margin-top: 8px;">
-                                        <label>Descanso (segundos)</label>
-                                        <input type="number" value="${serie.rest || 60}" 
-                                               onchange="updateSeries(${index}, ${sIndex}, 'rest', parseInt(this.value))">
+
+                                    <div style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:5px; margin-top:10px;">
+                                        <input type="number" id="w-${exI}-${sI}" placeholder="kg" style="padding:8px; border-radius:5px; border:1px solid #ccc;">
+                                        <input type="number" id="r-${exI}-${sI}" placeholder="reps" style="padding:8px; border-radius:5px; border:1px solid #ccc;">
+                                        <button class="btn btn-success" style="min-height:auto" onclick="registerSet(${index}, ${exI}, ${sI})">OK</button>
+                                    </div>
+                                    
+                                    <div style="margin-top:10px;" id="hist-${exI}-${sI}">
+                                        ${(s.history || []).slice(-1).map(h => `
+                                            <div class="history-item">
+                                                <span>Último: <b>${h.weight}kg</b> x ${h.reps}</span>
+                                                <span>${new Date(h.date).toLocaleDateString()}</span>
+                                            </div>
+                                        `).join('')}
                                     </div>
                                 </div>
                             `).join('')}
                         </div>
-                    </div>
+                    `).join('')}
                 </div>
-            `).join('');
+            `;
+            document.getElementById('listView').classList.add('hidden');
+            document.getElementById('viewWorkout').classList.remove('hidden');
+        }
+
+        function registerSet(wIdx, exIdx, sIdx) {
+            const weight = parseFloat(document.getElementById(`w-${exIdx}-${sIdx}`).value);
+            const reps = parseInt(document.getElementById(`r-${exIdx}-${sIdx}`).value);
+            
+            if(!weight || !reps) return alert("Preencha os dados!");
+
+            const serie = workouts[wIdx].exercises[exIdx].series[sIdx];
+            if(!serie.history) serie.history = [];
+            
+            // Recorde Pessoal
+            const last = serie.history[serie.history.length-1];
+            if(last && weight > last.weight) {
+                if(navigator.vibrate) navigator.vibrate([100, 50, 100]);
+                alert("⭐ NOVO RECORDE!");
+            }
+
+            serie.history.push({ weight, reps, date: new Date().toISOString() });
+            saveToStorage();
+            if(navigator.vibrate) navigator.vibrate(50);
+            
+            startTimer(exIdx, sIdx, serie.rest);
+        }
+
+        function startTimer(exI, sI, seconds) {
+            const display = document.getElementById(`timer-${exI}-${sI}`);
+            const timeSpan = document.getElementById(`time-${exI}-${sI}`);
+            display.classList.remove('hidden');
+            
+            let remaining = seconds;
+            if(timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                remaining--;
+                const mins = Math.floor(remaining / 60);
+                const secs = remaining % 60;
+                timeSpan.innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+                
+                if(remaining <= 0) {
+                    clearInterval(timerInterval);
+                    playBeep();
+                    if(navigator.vibrate) navigator.vibrate([300, 100, 300]);
+                    timeSpan.innerText = "PRONTO!";
+                    setTimeout(() => display.classList.add('hidden'), 2000);
+                }
+            }, 1000);
+        }
+
+        function stopTimer(exI, sI) {
+            clearInterval(timerInterval);
+            document.getElementById(`timer-${exI}-${sI}`).classList.add('hidden');
+        }
+
+        // --- FUNÇÕES DE EDIÇÃO (Simplificadas) ---
+        function showAddWorkout() {
+            editingWorkout = { day: '', name: '', exercises: [] };
+            document.getElementById('workoutDay').value = '';
+            document.getElementById('workoutName').value = '';
+            document.getElementById('exercisesList').innerHTML = '';
+            document.getElementById('listView').classList.add('hidden');
+            document.getElementById('editView').classList.remove('hidden');
         }
 
         function addExerciseToEdit() {
-            editingWorkout.exercises.push({
-                name: '',
-                notes: '',
-                series: [
-                    { name: '', minReps: 8, maxReps: 12, rest: 60, history: [] }
-                ]
-            });
-            renderExercisesList();
-        }
-
-        function addSeries(exerciseIndex) {
-            if (!editingWorkout.exercises[exerciseIndex].series) {
-                editingWorkout.exercises[exerciseIndex].series = [];
-            }
-            editingWorkout.exercises[exerciseIndex].series.push({
-                name: '',
-                minReps: 8,
-                maxReps: 12,
-                rest: 60,
-                history: []
-            });
-            renderExercisesList();
-        }
-
-        function updateExercise(index, field, value) {
-            editingWorkout.exercises[index][field] = value;
-        }
-
-        function updateSeries(exerciseIndex, seriesIndex, field, value) {
-            editingWorkout.exercises[exerciseIndex].series[seriesIndex][field] = value;
-        }
-
-        function removeExercise(index) {
-            editingWorkout.exercises.splice(index, 1);
-            renderExercisesList();
-        }
-
-        function removeSeries(exerciseIndex, seriesIndex) {
-            editingWorkout.exercises[exerciseIndex].series.splice(seriesIndex, 1);
-            renderExercisesList();
+            const div = document.createElement('div');
+            div.className = 'exercise-card';
+            const id = Date.now();
+            div.innerHTML = `
+                <input type="text" placeholder="Nome do exercício" class="ex-name" style="width:100%; margin-bottom:10px; padding:8px;">
+                <input type="number" placeholder="Descanso (seg)" class="ex-rest" value="60" style="width:100%; margin-bottom:10px; padding:8px;">
+                <div style="display:flex; gap:5px;">
+                    <input type="number" placeholder="Min Reps" class="ex-min" value="8" style="flex:1; padding:8px;">
+                    <input type="number" placeholder="Max Reps" class="ex-max" value="12" style="flex:1; padding:8px;">
+                </div>
+                <button class="btn btn-danger" style="width:100%; margin-top:10px; min-height:30px;" onclick="this.parentElement.remove()">Remover</button>
+            `;
+            document.getElementById('exercisesList').appendChild(div);
         }
 
         function saveWorkout() {
-            editingWorkout.day = document.getElementById('workoutDay').value;
-            editingWorkout.name = document.getElementById('workoutName').value;
+            const day = document.getElementById('workoutDay').value;
+            const name = document.getElementById('workoutName').value;
+            const exCards = document.querySelectorAll('#exercisesList .exercise-card');
             
-            if (editingWorkout.editIndex !== undefined) {
-                workouts[editingWorkout.editIndex] = editingWorkout;
+            const exercises = Array.from(exCards).map(card => ({
+                name: card.querySelector('.ex-name').value,
+                series: [{
+                    minReps: card.querySelector('.ex-min').value,
+                    maxReps: card.querySelector('.ex-max').value,
+                    rest: card.querySelector('.ex-rest').value,
+                    history: []
+                }]
+            }));
+
+            if(editingWorkout.index !== undefined) {
+                workouts[editingWorkout.index] = { day, name, exercises };
             } else {
-                workouts.push(editingWorkout);
+                workouts.push({ day, name, exercises });
             }
             
             saveToStorage();
@@ -873,241 +350,63 @@
             renderWorkoutList();
         }
 
-        function cancelEdit() {
-            editingWorkout = null;
-            document.getElementById('editView').classList.add('hidden');
-            document.getElementById('listView').classList.remove('hidden');
+        function editWorkout(i) {
+            showAddWorkout();
+            editingWorkout.index = i;
+            const w = workouts[i];
+            document.getElementById('workoutDay').value = w.day;
+            document.getElementById('workoutName').value = w.name;
+            w.exercises.forEach(ex => {
+                addExerciseToEdit();
+                const last = document.querySelector('#exercisesList .exercise-card:last-child');
+                last.querySelector('.ex-name').value = ex.name;
+                last.querySelector('.ex-rest').value = ex.series[0].rest;
+                last.querySelector('.ex-min').value = ex.series[0].minReps;
+                last.querySelector('.ex-max').value = ex.series[0].maxReps;
+            });
         }
 
-        function deleteWorkout(index) {
-            if (confirm('Deseja excluir esta ficha?')) {
-                workouts.splice(index, 1);
+        function deleteWorkout(i) {
+            if(confirm("Excluir esta ficha?")) {
+                workouts.splice(i, 1);
                 saveToStorage();
                 renderWorkoutList();
             }
         }
 
-        function viewWorkout(index) {
-            currentWorkout = workouts[index];
-            const detailDiv = document.getElementById('workoutDetail');
-            
-            detailDiv.innerHTML = `
-                <div class="card">
-                    <h2 class="section-title">🍃 ${currentWorkout.day}</h2>
-                    <p style="color: #c7f464; font-size: 1.2em; margin-bottom: 20px; font-weight: 600;">${currentWorkout.name}</p>
-                    ${currentWorkout.exercises.map((ex, exIndex) => `
-                        <div class="exercise-card">
-                            <div style="margin-bottom: 15px;">
-                                <h3 style="color: #1a4d2e; margin-bottom: 5px;">${ex.name}</h3>
-                                ${ex.notes ? `<div class="notes-display">📝 ${ex.notes}</div>` : ''}
-                            </div>
-                            
-                            ${(ex.series || []).map((serie, sIndex) => `
-                                <div class="series-info-view">
-                                    <strong>${serie.name || `Série ${sIndex + 1}`}</strong>
-                                    <div class="series-detail">🎯 ${serie.minReps}-${serie.maxReps} repetições</div>
-                                    <div class="series-detail">⏱️ Descanso: ${serie.rest}s</div>
-                                    <button class="btn btn-primary btn-small" style="margin-top: 8px;" onclick="showRegisterForm(${index}, ${exIndex}, ${sIndex})">
-                                        Registrar
-                                    </button>
-                                    <div id="registerForm-${exIndex}-${sIndex}" class="hidden register-form">
-                                        <div class="register-inputs">
-                                            <input type="number" id="weight-${exIndex}-${sIndex}" placeholder="Carga (kg)" 
-                                                   style="padding: 10px; border: 2px solid #a3d977; border-radius: 8px; font-weight: 600;">
-                                            <input type="number" id="reps-${exIndex}-${sIndex}" placeholder="Reps"
-                                                   style="padding: 10px; border: 2px solid #a3d977; border-radius: 8px; font-weight: 600;">
-                                        </div>
-                                        <div class="btn-group">
-                                            <button class="btn btn-success btn-small" onclick="saveSet(${index}, ${exIndex}, ${sIndex}, ${serie.rest || 60})">Salvar</button>
-                                            <button class="btn btn-danger btn-small" onclick="hideRegisterForm(${exIndex}, ${sIndex})">Cancelar</button>
-                                        </div>
-                                    </div>
-                                    <div id="timer-${exIndex}-${sIndex}" class="hidden timer-display">
-                                        <div class="timer-time" id="timer-time-${exIndex}-${sIndex}">00:00</div>
-                                        <div class="timer-label">⏱️ Tempo de Descanso</div>
-                                        <div class="timer-controls">
-                                            <button class="btn btn-danger btn-small" style="flex: 1;" onclick="stopTimer(${exIndex}, ${sIndex})">Parar</button>
-                                            <button class="btn btn-success btn-small" style="flex: 1;" onclick="skipTimer(${exIndex}, ${sIndex})">Pular ⏭️</button>
-                                        </div>
-                                    </div>
-                                    ${serie.history && serie.history.length > 0 ? `
-                                        <div style="margin-top: 10px;">
-                                            <p style="color: #2d5016; font-weight: 600; font-size: 0.85em; margin-bottom: 5px;">Últimos registros:</p>
-                                            ${serie.history.slice(-3).reverse().map(h => `
-                                                <div class="history-item" style="font-size: 0.85em; padding: 8px;">
-                                                    <span>${h.weight}kg × ${h.reps} reps</span>
-                                                    <span style="color: #4f772d;">${new Date(h.date).toLocaleDateString('pt-BR')}</span>
-                                                </div>
-                                            `).join('')}
-                                        </div>
-                                    ` : ''}
+        function showProgress() {
+            const list = document.getElementById('progressList');
+            list.innerHTML = `<h2 class="section-title">Evolução</h2>`;
+            workouts.forEach(w => {
+                w.exercises.forEach(ex => {
+                    ex.series.forEach(s => {
+                        if(s.history && s.history.length > 1) {
+                            const first = s.history[0].weight;
+                            const last = s.history[s.history.length-1].weight;
+                            const diff = last - first;
+                            list.innerHTML += `
+                                <div class="card">
+                                    <h4 style="color:white">${ex.name}</h4>
+                                    <p style="color:#c7f464">Evolução: +${diff}kg (Início: ${first}kg → Atual: ${last}kg)</p>
                                 </div>
-                            `).join('')}
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-            
-            document.getElementById('listView').classList.add('hidden');
-            document.getElementById('viewWorkout').classList.remove('hidden');
-        }
-
-        function showRegisterForm(workoutIndex, exerciseIndex, seriesIndex) {
-            document.getElementById(`registerForm-${exerciseIndex}-${seriesIndex}`).classList.remove('hidden');
-        }
-
-        function hideRegisterForm(exerciseIndex, seriesIndex) {
-            document.getElementById(`registerForm-${exerciseIndex}-${seriesIndex}`).classList.add('hidden');
-        }
-
-        function saveSet(workoutIndex, exerciseIndex, seriesIndex, restTime) {
-            const weight = parseFloat(document.getElementById(`weight-${exerciseIndex}-${seriesIndex}`).value);
-            const reps = parseInt(document.getElementById(`reps-${exerciseIndex}-${seriesIndex}`).value);
-            
-            if (!weight || !reps) {
-                alert('Preencha carga e repetições!');
-                return;
-            }
-            
-            if (!workouts[workoutIndex].exercises[exerciseIndex].series[seriesIndex].history) {
-                workouts[workoutIndex].exercises[exerciseIndex].series[seriesIndex].history = [];
-            }
-            
-            workouts[workoutIndex].exercises[exerciseIndex].series[seriesIndex].history.push({
-                date: new Date().toISOString(),
-                weight: weight,
-                reps: reps
+                            `;
+                        }
+                    });
+                });
             });
-            
-            saveToStorage();
-            hideRegisterForm(exerciseIndex, seriesIndex);
-            startTimer(exerciseIndex, seriesIndex, restTime);
-        }
-
-        function startTimer(exerciseIndex, seriesIndex, restTime) {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-            }
-
-            const timerDiv = document.getElementById(`timer-${exerciseIndex}-${seriesIndex}`);
-            timerDiv.classList.remove('hidden');
-            timerDiv.classList.add('active');
-
-            timerSeconds = restTime;
-            updateTimerDisplay(exerciseIndex, seriesIndex);
-
-            timerInterval = setInterval(() => {
-                timerSeconds--;
-                updateTimerDisplay(exerciseIndex, seriesIndex);
-
-                if (timerSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    timerDiv.classList.remove('active');
-                    
-                    if (navigator.vibrate) {
-                        navigator.vibrate([200, 100, 200, 100, 200]);
-                    }
-                    
-                    alert('⏰ Tempo de descanso concluído! Próxima série!');
-                    timerDiv.classList.add('hidden');
-                }
-            }, 1000);
-        }
-
-        function updateTimerDisplay(exerciseIndex, seriesIndex) {
-            const minutes = Math.floor(timerSeconds / 60);
-            const seconds = timerSeconds % 60;
-            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            document.getElementById(`timer-time-${exerciseIndex}-${seriesIndex}`).textContent = display;
-        }
-
-        function stopTimer(exerciseIndex, seriesIndex) {
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-            const timerDiv = document.getElementById(`timer-${exerciseIndex}-${seriesIndex}`);
-            timerDiv.classList.remove('active');
-            timerDiv.classList.add('hidden');
-        }
-
-        function skipTimer(exerciseIndex, seriesIndex) {
-            stopTimer(exerciseIndex, seriesIndex);
+            document.getElementById('listView').classList.add('hidden');
+            document.getElementById('progressView').classList.remove('hidden');
         }
 
         function backToList() {
-            currentWorkout = null;
             document.getElementById('viewWorkout').classList.add('hidden');
             document.getElementById('listView').classList.remove('hidden');
+            renderWorkoutList();
         }
 
-        function showProgress() {
-            const allExercises = {};
-            
-            workouts.forEach(workout => {
-                workout.exercises.forEach(ex => {
-                    if (ex.series) {
-                        ex.series.forEach((serie, sIndex) => {
-                            if (serie.history && serie.history.length > 0) {
-                                const key = `${ex.name} - ${serie.name || `Série ${sIndex + 1}`}`;
-                                if (!allExercises[key]) {
-                                    allExercises[key] = [];
-                                }
-                                allExercises[key].push(...serie.history);
-                            }
-                        });
-                    }
-                });
-            });
-
-            const progressDiv = document.getElementById('progressList');
-            
-            if (Object.keys(allExercises).length === 0) {
-                progressDiv.innerHTML = `
-                    <div class="empty-state">
-                        <div class="icon">🍃</div>
-                        <p>Nenhum registro ainda</p>
-                        <p style="font-size: 0.9em; margin-top: 10px;">Comece a registrar suas séries para ver seu progresso!</p>
-                    </div>
-                `;
-            } else {
-                progressDiv.innerHTML = Object.entries(allExercises).map(([name, history]) => {
-                    const sorted = history.sort((a, b) => new Date(a.date) - new Date(b.date));
-                    const first = sorted[0];
-                    const last = sorted[sorted.length - 1];
-                    const progress = last.weight - first.weight;
-                    const progressPercent = ((progress / first.weight) * 100).toFixed(1);
-                    
-                    return `
-                        <div class="progress-card">
-                            <div class="progress-header">${name}</div>
-                            <div class="progress-stats">
-                                <div class="stat-box">
-                                    <div class="stat-label">Inicial</div>
-                                    <div class="stat-value">${first.weight}kg</div>
-                                </div>
-                                <div class="stat-box">
-                                    <div class="stat-label">Atual</div>
-                                    <div class="stat-value">${last.weight}kg</div>
-                                </div>
-                                <div class="stat-box">
-                                    <div class="stat-label">Progresso</div>
-                                    <div class="stat-value ${progress >= 0 ? 'positive' : ''}">${progress > 0 ? '+' : ''}${progress}kg</div>
-                                </div>
-                            </div>
-                            <div class="progress-bar-container">
-                                <div class="progress-bar" style="width: ${Math.min(Math.abs(progressPercent), 100)}%"></div>
-                            </div>
-                            <div class="progress-info">
-                                ${sorted.length} registros • ${progressPercent > 0 ? '+' : ''}${progressPercent}% de evolução
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
-            
-            document.getElementById('listView').classList.add('hidden');
-            document.getElementById('progressView').classList.remove('hidden');
+        function cancelEdit() {
+            document.getElementById('editView').classList.add('hidden');
+            document.getElementById('listView').classList.remove('hidden');
         }
 
         function closeProgress() {
@@ -1115,63 +414,7 @@
             document.getElementById('listView').classList.remove('hidden');
         }
 
-        function exportData() {
-            if (workouts.length === 0) {
-                alert('Não há dados para exportar!');
-                return;
-            }
-
-            const dataStr = JSON.stringify(workouts, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `chikoritagym_backup_${new Date().toISOString().split('T')[0]}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            
-            alert('✅ Backup exportado com sucesso! Salve o arquivo em um local seguro.');
-        }
-
-        function importData(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                try {
-                    const importedData = JSON.parse(e.target.result);
-                    
-                    if (!Array.isArray(importedData)) {
-                        alert('❌ Arquivo inválido!');
-                        return;
-                    }
-
-                    const confirmImport = confirm(
-                        `Você tem ${workouts.length} ficha(s) salva(s).\n` +
-                        `O arquivo contém ${importedData.length} ficha(s).\n\n` +
-                        `Deseja:\n` +
-                        `OK = Adicionar as fichas do backup às suas fichas atuais\n` +
-                        `Cancelar = Não importar`
-                    );
-
-                    if (confirmImport) {
-                        workouts = [...workouts, ...importedData];
-                        saveToStorage();
-                        renderWorkoutList();
-                        alert('✅ Backup importado com sucesso!');
-                    }
-                } catch (error) {
-                    alert('❌ Erro ao importar arquivo! Certifique-se de que é um backup válido do ChikoritaGym.');
-                }
-            };
-            reader.readAsText(file);
-            event.target.value = '';
-        }
-
+        // Inicialização
         renderWorkoutList();
     </script>
 </body>
